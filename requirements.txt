@@ -1,0 +1,8 @@
+torch~=2.6.0
+matplotlib~=3.10.1
+pandas~=2.2.3
+preprocess~=2.0.0
+joblib~=1.4.2
+scikit-learn~=1.6.1
+networkx~=3.4.2
+sympy~=1.13.1

@@ -5,23 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="59965f29-1ed4-4021-a21c-c0cb070f2aaf" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/dbnavigator.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/machine_learning.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data_processing/facebook/eda.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data_processing/facebook/preprocess.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data_processing/netflix/eda.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data_processing/netflix/preprocess.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/hybrid_model/cf_encoder.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/raw_data/netflix/movie_encoder.pkl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/raw_data/netflix/netflix_normalized.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/raw_data/netflix/netflix_preprocessed.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/raw_data/netflix/netflix_ratings.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/raw_data/netflix/user_encoder.pkl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/training/train_cf.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -38,6 +23,18 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "Mancii-ca"
+  }
+}]]></component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "git@github.com:Mancii-ca/machine_learning.git",
+    "accountId": "63c3718c-852f-4ca6-85bd-deb76f0a386b"
+  }
+}]]></component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 1
 }</component>

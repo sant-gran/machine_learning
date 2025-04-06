@@ -47,7 +47,7 @@ patience_counter = 0
 
 # Save Path for Best Model
 project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
-model_dir = os.path.join(project_root, "hybrid_model")
+model_dir = os.path.join(project_root, "saved_models")
 os.makedirs(model_dir, exist_ok=True) # Makes sure that there is a dir called "hybrid_model"
 
 model_path = os.path.join(model_dir, "cf_encoder_model.pth")
