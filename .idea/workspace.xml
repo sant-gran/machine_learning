@@ -5,8 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="59965f29-1ed4-4021-a21c-c0cb070f2aaf" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_processing/netflix/eda.py" beforeDir="false" afterPath="$PROJECT_DIR$/data_processing/netflix/eda.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_processing/netflix/preprocess.py" beforeDir="false" afterPath="$PROJECT_DIR$/data_processing/netflix/preprocess.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hybrid_model/cf_encoder.py" beforeDir="false" afterPath="$PROJECT_DIR$/hybrid_model/cf_encoder.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/raw_data/netflix/user_encoder.pkl" beforeDir="false" afterPath="$PROJECT_DIR$/raw_data/netflix/user_encoder.pkl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/saved_models/cf_encoder_model.pth" beforeDir="false" afterPath="$PROJECT_DIR$/saved_models/cf_encoder_model.pth" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/training/train_cf.py" beforeDir="false" afterPath="$PROJECT_DIR$/training/train_cf.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

@@ -7,46 +7,54 @@ This project combines **Collaborative Filtering (CF)** with a **Graph Neural Net
 ## Project Structure
 
 ```bash
-neurograph/
-├── data_processing/
+machine_learning/
+├── data_processing/              # Clean & preprocess raw data
 │   ├── facebook/
 │   │   ├── eda.py
 │   │   └── preprocess.py
 │   └── netflix/
 │       ├── eda.py
 │       └── preprocess.py
-├── raw_data/
+│
+├── raw_data/                     # Downloaded datasets and encoders
 │   └── netflix/
 │       ├── netflix_ratings.csv
 │       ├── netflix_normalized.csv
 │       ├── movie_encoder.pkl
 │       ├── user_encoder.pkl
-├── hybrid_model/
-│   ├── cf_encoder.py
-│   ├── gnn_encoder.py
-│   ├── fusion.py
-│   ├── predictor.py
-│   └── hybrid_model.py
-├── training/
-│   ├── train_cf.py
-│   ├── train_gnn.py
-│   ├── train_hybrid.py
-│   └── dataset.py
-├── evaluation/
-│   ├── metrics.py
-│   └── evaluate_model.py
-├── notebooks/
+│       └── ...
+│
+├── hybrid_model/                 # Core model logic
+│   ├── cf_encoder.py             # CF (matrix-based or learned embeddings)
+│   ├── gnn_encoder.py            # GNN encoding from Facebook data
+│   ├── fusion.py                 # Combine CF + GNN (e.g., concat, MLP)
+│   ├── predictor.py              # Predict scores from fused embeddings
+│   └── hybrid_model.py           # Wraps the full hybrid architecture
+│
+├── training/                     # Training scripts
+│   ├── train_cf.py               # CF model
+│   ├── train_gnn.py              # GNN model
+│   ├── train_hybrid.py           # End-to-end hybrid model
+│   └── dataset.py                # Dataset + DataLoader logic
+│
+├── evaluation/                   # Evaluation scripts
+│   ├── metrics.py                # Precision, recall, RMSE, etc.
+│   └── evaluate_model.py         # Compare models
+│
+├── notebooks/                    # Jupyter notebooks for exploration
 │   └── exploratory.ipynb
-├── saved_models/
+│
+├── saved_models/                 # Trained models
 │   ├── cf_encoder.pt
 │   ├── gnn_encoder.pt
 │   └── hybrid_model.pt
-├── utils/
-│   ├── encoders.py
-│   └── logger.py
-├── requirements.txt
-└── README.md
-
+│
+├── utils/                        # Helper utilities
+│   ├── encoders.py               # Load/save LabelEncoders
+│   └── logger.py                 # Training logs
+│
+├── requirements.txt              # Python dependencies
+└── README.md                     # This file
 ```
 
 ---

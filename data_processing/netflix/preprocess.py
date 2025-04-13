@@ -4,7 +4,7 @@ import os
 import joblib
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelEncoder
-from torch.utils.data import Dataset, DataLoader
+
 
 # Load Netflix Dataset
 data_file= "/Users/santiagog/Desktop/netflix_dataset/combined_data_1.txt"
@@ -29,7 +29,7 @@ for file in data_files:
         data = []
 
         for i, line in enumerate(f):
-            if i >= 1000: #stop after 1000 lines
+            if i >= 20000: #stop after 1000 lines
                 break
             line = line.strip()
             if line.endswith(":"):  # Movie ID line (e.g., "1:")

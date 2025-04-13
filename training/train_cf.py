@@ -5,6 +5,10 @@ import sys
 import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
+# this is just to ignore loggin errors with input formats in my Mac due to IMK
+os.environ["PYTHONWARNINGS"] = "ignore"
+os.environ["OBJC_DISABLE_INITIALIZE_FORK_SAFETY"] = "YES"
+
 # Necessary libraries
 import torch
 import torch.nn as nn
@@ -52,15 +56,24 @@ os.makedirs(model_dir, exist_ok=True) # Makes sure that there is a dir called "h
 
 model_path = os.path.join(model_dir, "cf_encoder_model.pth")
 
+# Initialize Pre Training Mode
+PRETRAIN_MODE = False # Switch to False once the new changes are good to train in full dataset
+PRETRAIN_SIZE = 5000
+if PRETRAIN_MODE:
+    print(f"Pretraining Mode Active - using {PRETRAIN_SIZE} samples and 5 epochs")
 
+    train_user = train_user[:PRETRAIN_SIZE]
+    train_movie = train_movie[:PRETRAIN_SIZE]
+    train_rating = train_rating[:PRETRAIN_SIZE]
+
+num_epochs = 5 if PRETRAIN_MODE else 50
 # Training Loop
-num_epochs = 10
 for epoch in range(num_epochs):
     model.train()
     total_loss = 0
 
     for user, movie, rating in train_loader:
-        output = model(user, movie)
+        output,_,_ = model(user, movie)
         loss = criterion(output, rating.float()) # float conversion here for the ratings
 
         optimizer.zero_grad()
@@ -76,7 +89,7 @@ for epoch in range(num_epochs):
     val_loss = 0
     with torch.no_grad():
         for user, movie, rating in val_loader:
-            output = model(user, movie)
+            output,_,_ = model(user, movie)
             loss = criterion(output, rating.float()) #float conversion here for the ratings
             val_loss += loss.item()
         avg_val_loss = val_loss / len(val_loader)
@@ -89,7 +102,7 @@ for epoch in range(num_epochs):
         torch.save(model.state_dict(), model_path)
         print(" New best model saved! ")
     else:
-        patience_counter += 1
+        patience_counter += 3
         if patience_counter >= patience:
             print(f" Early stopping triggered at epoch {epoch+1}")
             break
