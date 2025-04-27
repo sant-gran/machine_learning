@@ -4,7 +4,7 @@ import torch.nn as nn
 
 
 class CFEncoder(nn.Module):
-    def __init__(self, num_users, num_movies, mlp_hidden_sizes = [128, 64, 1], embedding_dim=64, dropout=0.2):
+    def __init__(self, num_users, num_movies, mlp_hidden_sizes = [128, 64, 1], embedding_dim=64, dropout=0.5):
         super(CFEncoder, self).__init__()
 
 
@@ -67,11 +67,3 @@ class CFEncoder(nn.Module):
 
 
         return output.squeeze(), user_embed, movie_embed # removes extra dimension -> shape: [batch-size]
-
-
-
-
-
-
-
-

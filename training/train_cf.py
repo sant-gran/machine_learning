@@ -38,7 +38,7 @@ val_loader = DataLoader(val_dataset, batch_size=64)
 # Initialize Model, Loss, Optimizer
 model = CFEncoder(num_users=num_users, num_movies=num_movies)
 criterion = nn.MSELoss(reduction="mean")
-optimizer = torch.optim.Adam(model.parameters(), lr=0.001)
+optimizer = torch.optim.Adam(model.parameters(), lr=0.001, weight_decay=1e-5)
 
 # Store the losses values to later use them in model training monitoring
 train_losses = []
@@ -58,7 +58,7 @@ model_path = os.path.join(model_dir, "cf_encoder_model.pth")
 
 # Initialize Pre Training Mode
 PRETRAIN_MODE = False # Switch to False once the new changes are good to train in full dataset
-PRETRAIN_SIZE = 5000
+PRETRAIN_SIZE = 15000
 if PRETRAIN_MODE:
     print(f"Pretraining Mode Active - using {PRETRAIN_SIZE} samples and 5 epochs")
 
@@ -66,7 +66,7 @@ if PRETRAIN_MODE:
     train_movie = train_movie[:PRETRAIN_SIZE]
     train_rating = train_rating[:PRETRAIN_SIZE]
 
-num_epochs = 5 if PRETRAIN_MODE else 50
+num_epochs = 10 if PRETRAIN_MODE else 50
 # Training Loop
 for epoch in range(num_epochs):
     model.train()
@@ -120,6 +120,14 @@ plt.legend()
 plt.grid(True)
 plt.show()
 
+# --- After Training Ends ---
+print("\nSaving final clean backup model before testing...")
 
+# Load best model
+model.load_state_dict(torch.load(model_path))
 
+# Save backup
+backup_path = os.path.join(model_dir, "cf_encoder_pretest_backup.pth")
+torch.save(model.state_dict(), backup_path)
 
+print(f"Final pretest model saved at: {backup_path}")

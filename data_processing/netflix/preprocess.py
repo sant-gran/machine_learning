@@ -6,13 +6,6 @@ from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelEncoder
 
 
-# Load Netflix Dataset
-data_file= "/Users/santiagog/Desktop/netflix_dataset/combined_data_1.txt"
-
-with open(data_file, "r") as file:
-    for _ in range(10):
-        print(file.readline().strip())
-
 data_folder = "/Users/santiagog/Desktop/netflix_dataset"
 
 # List of file (combined_data 1 to 4)
@@ -29,7 +22,7 @@ for file in data_files:
         data = []
 
         for i, line in enumerate(f):
-            if i >= 20000: #stop after 1000 lines
+            if i >= 100000: #stop after 100000 lines
                 break
             line = line.strip()
             if line.endswith(":"):  # Movie ID line (e.g., "1:")
@@ -112,13 +105,13 @@ df_final["normalized_rating"] = (df_final["rating"]- min_rating) / (max_rating -
 print("Normalized ratings:")
 print(df_final[["rating" , "normalized_rating"]].head())
 
-"""Splitting the data"""
+"""Splitting the data with stratification"""
 
-# Split off the Test set (20%)
-train_val_df, test_df = train_test_split(df_final, test_size =0.2, random_state=42)
+# Split off the Test set (20%) with stratification
+train_val_df, test_df = train_test_split(df_final, test_size =0.2, random_state=42, stratify=df_final["rating"])
 
 # Split remaining 80% into 70/10 --> train + validation
-train_df, val_df = train_test_split(train_val_df, test_size=0.125, random_state=42)
+train_df, val_df = train_test_split(train_val_df, test_size=0.125, random_state=42, stratify=train_val_df["rating"])
 
 
 print(f"Train Set: {len(train_df)} rows")

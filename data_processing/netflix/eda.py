@@ -43,7 +43,7 @@ print(flat_users.head(10))
 
 # Users who rated the most
 
-top_users = user_stats.sort_values("num_rating", ascending=False).head(10)
+top_users = user_stats.sort_values("num_ratings", ascending=False).head(10)
 print(" Top 10 most active users")
 print(top_users)
 
@@ -58,3 +58,12 @@ plt.xlabel("User ID")
 plt.ylabel("Rating")
 plt.show()
 
+
+# Rating Stratification
+plt.figure(figsize=(10, 10))
+sns.countplot(x="rating", data=df_final)
+plt.title("Rating Distribution")
+plt.xlabel("Rating Value")
+plt.ylabel("Count")
+plt.grid(True)
+plt.show()

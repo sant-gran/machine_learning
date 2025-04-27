@@ -116,5 +116,5 @@ Feel free to open issues or submit pull requests to improve data loaders, fusion
 ---
 
 ## Contact
-Created and maintained by the Santiago Granados
+Created and maintained by Santiago Granados
 
