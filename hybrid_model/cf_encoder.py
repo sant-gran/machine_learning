@@ -67,3 +67,7 @@ class CFEncoder(nn.Module):
 
 
         return output.squeeze(), user_embed, movie_embed # removes extra dimension -> shape: [batch-size]
+
+
+
+
