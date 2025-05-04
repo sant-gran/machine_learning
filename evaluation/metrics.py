@@ -23,5 +23,5 @@ def rmse(predictions, targets):
 
     return sqrt(mean_squared_error(targets, predictions))
 
-print("hello")
+
 
