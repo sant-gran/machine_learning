@@ -2,6 +2,7 @@ import pandas as pd
 import torch
 import os
 import joblib
+import pickle
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelEncoder
 
@@ -81,7 +82,7 @@ movie_encoder = LabelEncoder()
 
 # Apply encoders to create numerical indices
 df_final["user_idx"] = user_encoder.fit_transform(df_final["user_id"])
-df_final["movie_idx"] = user_encoder.fit_transform(df_final["movie_id"])
+df_final["movie_idx"] = movie_encoder.fit_transform(df_final["movie_id"])
 
 # Check the transformation
 print("Sample Mapping:")
@@ -159,4 +160,13 @@ preprocessed_data = {
 def get_preprocessed_data():
     return preprocessed_data
 
+# Create directory if it doesn't exist
+os.makedirs("raw_data/netflix", exist_ok=True)
+
+# Save encoders after fitting
+with open("raw_data/netflix/user_encoder.pkl", "wb") as f:
+    pickle.dump(user_encoder, f)
+
+with open("raw_data/netflix/movie_encoder.pkl", "wb") as f:
+    pickle.dump(movie_encoder, f)
 
