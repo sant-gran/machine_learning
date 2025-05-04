@@ -22,3 +22,6 @@ def rmse(predictions, targets):
         targets = targets.cpu().numpy()
 
     return sqrt(mean_squared_error(targets, predictions))
+
+print("hello")
+
