@@ -3,8 +3,6 @@
 import gzip
 import networkx as nx
 import matplotlib.pyplot as plt
-from matplotlib.lines import lineStyles
-from sympy.printing.pretty.pretty_symbology import line_width
 
 # 1 BASIC GRAPH STATS
 
