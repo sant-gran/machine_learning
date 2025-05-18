@@ -3,7 +3,8 @@
 import gzip
 import torch
 import networkx as nx
-from torch_geometric.utils import from_networkx
+import random
+from torch_geometric.utils import from_networkx, to_undirected, negative_sampling
 
 def load_graph_from_gz(path: str) -> nx.Graph:
     print("Loading graph from:", path)
@@ -33,9 +34,45 @@ def extract_node_features(graph: nx.Graph) -> nx.Graph:
     print("Node features extracted.")
     return graph
 
+def split_edges_for_link_prediction(data, val_ratio=0.05, test_ratio=0.1, seed=42):
+    assert 'edge_index' in data, "data must contain 'edge_index'"
+
+    edge_index = to_undirected(data.edge_index)
+    num_edges = edge_index.size(1)
+    num_val = int(num_edges * val_ratio)
+    num_test = int(num_edges * test_ratio)
+    num_train = num_edges - num_val - num_test
+
+    torch.manual_seed(seed)
+    perm = torch.randperm(num_edges)
+
+    train_edges = edge_index[:, perm[:num_train]]
+    val_edges = edge_index[:, perm[num_train:num_train+num_val]]
+    test_edges = edge_index[:, perm[num_train+num_val:]]
+
+    # Negative sampling for val/test
+    neg_val = negative_sampling(edge_index=train_edges, num_nodes=data.num_nodes, num_neg_samples=val_edges.size(1), method='sparse')
+    neg_test = negative_sampling(edge_index=train_edges, num_nodes=data.num_nodes, num_neg_samples=test_edges.size(1), method='sparse')
+
+    split_data = {
+        "train_pos_edge_index": train_edges,
+        "val_pos_edge_index": val_edges,
+        "val_neg_edge_index": neg_val,
+        "test_pos_edge_index": test_edges,
+        "test_neg_edge_index": neg_test
+    }
+
+    print("Edge splitting completed:")
+    print(f" Train edges: {train_edges.size(1)}")
+    print(f" Val edges: {val_edges.size(1)} (with {neg_val.size(1)} negative samples)")
+    print(f" Test edges: {test_edges.size(1)} (with {neg_test.size(1)} negative samples)")
+
+    return split_data
+
+
+
 def convert_to_pyg(graph: nx.Graph, output_path="facebook_graph_data.pt"):
     print("Converting NetworkX graph to PyG format")
-
     graph = extract_node_features(graph)
 
     # Add 'x' feature vector to every node
@@ -52,6 +89,17 @@ def convert_to_pyg(graph: nx.Graph, output_path="facebook_graph_data.pt"):
 
     # Build feature matrix manually
     pyg_data.x = torch.stack([graph.nodes[n]["x"] for n in graph.nodes()])
+
+    # Split edges for link prediction
+    split_data = split_edges_for_link_prediction(pyg_data)
+
+    # Attach split edge indices to pyg_data
+    pyg_data.train_pos_edge_index = split_data["train_pos_edge_index"]
+    pyg_data.val_pos_edge_index = split_data["val_pos_edge_index"]
+    pyg_data.val_neg_edge_index = split_data["val_neg_edge_index"]
+    pyg_data.test_pos_edge_index = split_data["test_pos_edge_index"]
+    pyg_data.test_neg_edge_index = split_data["test_neg_edge_index"]
+
 
     # Save to disk
     torch.save(pyg_data, output_path)
