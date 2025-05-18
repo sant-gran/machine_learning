@@ -60,7 +60,7 @@ def convert_to_pyg(graph: nx.Graph, output_path="facebook_graph_data.pt"):
 
 if __name__ == "__main__":
     input_path = "/Users/santiagog/Desktop/facebook_data/facebook_combined.txt.gz"
-    output_path = "/Users/santiagog/Desktop/Python/machine_learning/saved_models/facebook_graph_data.pt"
+    output_path = "/Users/santiagog/Desktop/Python/machine_learning/raw_data/facebook/facebook_graph_data.pt"
 
     try:
         graph = load_graph_from_gz(input_path)
