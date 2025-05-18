@@ -51,11 +51,13 @@ def split_edges_for_link_prediction(data, val_ratio=0.05, test_ratio=0.1, seed=4
     test_edges = edge_index[:, perm[num_train+num_val:]]
 
     # Negative sampling for val/test
+    neg_train = negative_sampling(edge_index=train_edges, num_nodes=data.num_nodes, num_neg_samples=train_edges.size(1), method='sparse')
     neg_val = negative_sampling(edge_index=train_edges, num_nodes=data.num_nodes, num_neg_samples=val_edges.size(1), method='sparse')
     neg_test = negative_sampling(edge_index=train_edges, num_nodes=data.num_nodes, num_neg_samples=test_edges.size(1), method='sparse')
 
     split_data = {
         "train_pos_edge_index": train_edges,
+        "train_neg_edge_index": neg_train,
         "val_pos_edge_index": val_edges,
         "val_neg_edge_index": neg_val,
         "test_pos_edge_index": test_edges,
@@ -95,6 +97,7 @@ def convert_to_pyg(graph: nx.Graph, output_path="facebook_graph_data.pt"):
 
     # Attach split edge indices to pyg_data
     pyg_data.train_pos_edge_index = split_data["train_pos_edge_index"]
+    pyg_data.train_neg_edge_index = split_data["train_neg_edge_index"]
     pyg_data.val_pos_edge_index = split_data["val_pos_edge_index"]
     pyg_data.val_neg_edge_index = split_data["val_neg_edge_index"]
     pyg_data.test_pos_edge_index = split_data["test_pos_edge_index"]

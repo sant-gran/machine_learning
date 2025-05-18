@@ -2,15 +2,15 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 from torch_geometric.nn import SAGEConv
-from hybrid_score import HybridSimilarityScorer
+from hybrid_model.hybrid_score import HybridSimilarityScorer
 
 class GraphSAGEEncoder(nn.Module):
-    def __init__(self, in_channels, hidden_channels, out_channels, dropout=0.5):
+    def __init__(self, in_channels, hidden_channels, out_channels, scorer_hidden_dim=192,  dropout=0.5):
         super(GraphSAGEEncoder, self).__init__()
         self.conv1 = SAGEConv(in_channels, hidden_channels)
         self.conv2 = SAGEConv(hidden_channels, out_channels)
         self.dropout = dropout
-        self.similarity = HybridSimilarityScorer(input_dim=out_channels * 2) # Concat size
+        self.similarity = HybridSimilarityScorer(embedding_dim=out_channels, hidden_dim=scorer_hidden_dim) # Concat size
 
     def forward(self, x, edge_index):
         x = self.conv1(x, edge_index)
@@ -20,10 +20,10 @@ class GraphSAGEEncoder(nn.Module):
         return x
 
 class GraphSAGEWithSimilarity(nn.Module):
-    def __init__(self, in_channels, hidden_channels, out_channels, dropout = 0.5, scorer_hidden_dim=32):
+    def __init__(self, in_channels, hidden_channels, out_channels, dropout = 0.5, scorer_hidden_dim=192):
         super(GraphSAGEWithSimilarity, self).__init__()
-        self.encoder = GraphSAGEEncoder(in_channels, hidden_channels,  out_channels, dropout)
-        self.similarity = HybridSimilarityScorer(input_dim=out_channels * 2, hidden_dim=scorer_hidden_dim)
+        self.encoder = GraphSAGEEncoder(in_channels, hidden_channels,  out_channels, dropout=dropout)
+        self.similarity = HybridSimilarityScorer(embedding_dim=out_channels, hidden_dim=scorer_hidden_dim)
     def forward(self, x, edge_index, edge_pairs=None):
         embeddings = self.encoder(x, edge_index)
 
